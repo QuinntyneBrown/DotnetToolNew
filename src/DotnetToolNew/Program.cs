@@ -8,7 +8,7 @@ var projectDirectory = Path.Combine(solutionDirectory, "src", name);
 
 Directory.CreateDirectory(solutionDirectory);
 
-Directory.CreateDirectory(Path.Combine(solutionDirectory,"src"));
+Directory.CreateDirectory(Path.Combine(solutionDirectory, "src"));
 
 Directory.CreateDirectory(projectDirectory);
 
@@ -19,11 +19,11 @@ await DotnetAsync("new sln", solutionDirectory);
 await DotnetAsync("new console", projectDirectory);
 
 File.WriteAllText(Path.Combine(projectDirectory, "update.bat"), new StringBuilder()
-    .AppendJoin(Environment.NewLine, new[] { 
-        $"dotnet tool uninstall -g {name}", 
-        "dotnet pack", 
-        $"dotnet tool install --global --add-source ./nupkg {name}" 
-    }) 
+    .AppendJoin(Environment.NewLine, new[] {
+        $"dotnet tool uninstall -g {name}",
+        "dotnet pack",
+        $"dotnet tool install --global --add-source ./nupkg {name}"
+    })
     .ToString());
 
 var doc = XElement.Load(csProjFilePath);
@@ -44,7 +44,7 @@ await DotnetAsync($"sln {name}.sln add {Path.Combine(projectDirectory, $"{name}.
 
 await CommandAsync($"start {Path.Combine(solutionDirectory, name)}.sln", solutionDirectory);
 
-async Task DotnetAsync(string arguments, string workingDirectory) 
+async Task DotnetAsync(string arguments, string workingDirectory)
     => await StartAsync("dotnet.exe", arguments, workingDirectory);
 
 async Task CommandAsync(string arguments, string workingDirectory)
@@ -54,9 +54,10 @@ async Task StartAsync(string filename, string arguments, string workingDirectory
 {
     Process process = new()
     {
-        StartInfo = new() { 
+        StartInfo = new()
+        {
             WindowStyle = ProcessWindowStyle.Normal,
-            FileName = filename, 
+            FileName = filename,
             Arguments = arguments,
             WorkingDirectory = workingDirectory
         }
